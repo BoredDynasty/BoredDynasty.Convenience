@@ -1,6 +1,7 @@
 --!strict
-
 --[[
+https://github.com/BoredDynasty/BoredDynasty.Convenience/tree/main
+Please don't copy this
 Dynasty here!
 If you don't create the things required to run this module script, somethings won't work.
 Ill comment my script if you have to make something in a certain area of your Roblox Game.
@@ -14,18 +15,18 @@ Module Script
 -- Variables
 local Convenience = {}
 
-local ReplicatedStorage = game:GetService("ReplicatedService")
-local UserInputService = game:GetService("UserInputService")
-local Lighting = game:GetService("Lighting")
-local ContextActionService = game:GetService("ContextActionService")
-local ContentProvider = game:GetService("ContentProvider")
-local ControllerService = game:GetService("ControllerService")
-local CollectionService = game:GetService("CollectionService")
-local GamePassService = game:GetService("GamePassService")
-local GamepadService = game:GetService("GamepadService")
-local HapticService = game:GetService("HapticService")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService('ReplicatedStorage');
+local UserInputService = game:GetService('UserInputService');
+local Lighting = game:GetService('Lighting');
+local ContextActionService = game:GetService('ContextActionService');
+local ContentProvider = game:GetService('ContentProvider');
+local ControllerService = game:GetService('ControllerService');
+local CollectionService = game:GetService('CollectionService');
+local GamePassService = game:GetService('GamePassService');
+local GamepadService = game:GetService('GamepadService');
+local HapticService = game:GetService('HapticService');
+local RunService = game:GetService('RunService');
+local Players = game:GetService('Players');
 local LocalPlayer = Players.LocalPlayer
 local TweenService = game:GetService("TweenService") -- One of the most important!
 
@@ -184,8 +185,11 @@ Convenience.DetectPlayerInput = function()
 end
 
 Convenience.DeleteSomething = function(args) -- Could just do it yourself but, might as well!
-	args:Destroy()
-	return args
+	if args then
+		args:Destroy()
+	end
+	if not args then
+		warn(tostring("You can't delete [nil]."))
+	end
 end
-
-return Convenience -- Thats Convenience!
+return Convenience
