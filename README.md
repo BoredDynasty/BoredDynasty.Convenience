@@ -8,12 +8,15 @@
 
 > [!CAUTION]
 > This script is very new and most likely encounter errors.
+>
 > Some methods in the script are not optimal so its reccomended not to use some of those methods.
+>
 > Egregious Syntaxing Incoming
 
 
 > [!NOTE]
 > If you can, please highlight some things you want more ***Convenient.***
+>
 > Written in VS Code! *Thats why everything may seem janky*
 
 # The Module
