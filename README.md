@@ -2,6 +2,8 @@
 
 ![GetOnMarketPlace](https://github.com/user-attachments/assets/f21d84d0-984e-4d0a-bc4d-62bb0aba9de2)
 
+---
+
 ### By Dynasty
 #### On Roblox
 *August 2nd 2024*
@@ -17,7 +19,9 @@
 > [!NOTE]
 > If you can, please highlight some things you want more ***Convenient.***
 >
-> Written in VS Code! *Thats why everything may seem janky*
+> Written in VS Code! *Thats why everything may seem* **janky**
+
+---
 
 # The Module
 ## Controller Support
@@ -40,3 +44,5 @@ Currently we have
 > Gamepad Support
 > 
 > Deleting Something
+>
+> Error Handling *kinda*
