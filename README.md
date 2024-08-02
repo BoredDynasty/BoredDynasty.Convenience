@@ -5,19 +5,27 @@
 ### By Dynasty
 #### On Roblox
 *August 2nd 2024*
-> Egregious Syntaxing Incoming
 
 > [!CAUTION]
 > This script is very new and most likely encounter errors.
 > Some methods in the script are not optimal so its reccomended not to use some of those methods.
+> Egregious Syntaxing Incoming
 
 
 > [!NOTE]
 > If you can, please highlight some things you want more ***Convenient.***
+> Written in VS Code! *Thats why everything may seem janky*
 
 # The Module
 ## Controller Support
-Currently we only have Controller Rumbling
+Currently we have
 
-![ViewItOnDoc](https://github.com/user-attachments/assets/0f22e15e-4119-45e1-ac78-52528ed24756)
-
+> Controller Rumbling
+> Controller Stick Rumbling
+> Lighting Changing
+> Displaying Player Height
+> Rewarding The Player
+> A Custom Function for when the game fully loads
+> Detect The Player Input
+> Gamepad Support
+> Deleting Something
