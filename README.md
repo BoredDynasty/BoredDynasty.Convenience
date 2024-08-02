@@ -21,11 +21,19 @@
 Currently we have
 
 > Controller Rumbling
+> 
 > Controller Stick Rumbling
+> 
 > Lighting Changing
+> 
 > Displaying Player Height
+> 
 > Rewarding The Player
+> 
 > A Custom Function for when the game fully loads
+> 
 > Detect The Player Input
+> 
 > Gamepad Support
+> 
 > Deleting Something
