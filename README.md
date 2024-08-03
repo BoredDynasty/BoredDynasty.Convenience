@@ -2,13 +2,13 @@
 
 ![GetOnMarketPlace](https://github.com/user-attachments/assets/f21d84d0-984e-4d0a-bc4d-62bb0aba9de2)
 
----
+
 
 ### By Dynasty
 #### On Roblox
 *August 3rd 2024*
 
-This Module Script is used to make Roblox Scripting More Convenient.
+**This Module Script is used to make Roblox Scripting More Convenient.**
 
 > [!CAUTION]
 > This script is very new and most likely encounter errors.
@@ -21,14 +21,12 @@ This Module Script is used to make Roblox Scripting More Convenient.
 > [!NOTE]
 > If you can, please highlight some things you want more ***Convenient.***
 >
-> I got some template script from the Roblox Docs so some things may seem familiar if you even read the Docs 
->
-> Written in VS Code! *Thats why everything may seem* **janky**
+> I got some template script from the Roblox Docs so some things may seem familiar if you even read the Docs
 
----
+![ViewItOnDoc](https://github.com/user-attachments/assets/4573e167-f497-46bc-bc71-3f4545910525)
 
 ## The Module
-Currently we have
+### Currently we have
 
 #### Controller Stick Rumbling
  
