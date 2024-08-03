@@ -3,10 +3,20 @@
 https://github.com/BoredDynasty/BoredDynasty.Convenience/tree/main
 Please don't copy this
 Dynasty here!
+
+This script is used to make almost everything convenient! 
+What I mean is you dont have to write so much, 
+you can require this module and call any function and write a few variables yourself. 
+	Simple, right?
 If you don't create the things required to run this module script, somethings won't work. tostring("And some things will not work!")
+
 Ill comment my script if you have to make something in a certain area of your Roblox Game.
+
 Used for making everything convenient so you don't have to write too many scripts for your game
-Over [tonumber(300)] Lines of Code! [Thats alot for me!]
+
+Over [tonumber(400)] Lines of Code! [Thats alot for me!]
+
+
                                                     >THIS IS NOT OPTIMIZED<
 
 Module Script
@@ -15,7 +25,7 @@ Module Script
 -- Variables
 local Convenience = {}
 local ConvenienceSettings = {
-	PrintingEnabled = true,
+	PrintingEnabled = true, -- We'll sometimes ignore this for your own benefit.
 	CustomCode = false,
 }
 do
@@ -23,6 +33,7 @@ do
 end
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage');
+local HttpService = game:GetService('HttpService');
 local UserInputService = game:GetService('UserInputService');
 local Lighting = game:GetService('Lighting');
 local ContextActionService = game:GetService('ContextActionService');
@@ -272,20 +283,21 @@ end
 
 Convenience.TweenElement = function(Element: GuiObject, Tween: TweenInfo, Position: UDim2, Size: UDim2)
 	if Position and Size and Tween then
-		TweenService:Create(Element, Tween, {Position = Position})
-		TweenService:Create(Element, Tween, {Size = Size})
+		TweenService:Create(Element, Tween, { Position = Position })
+		TweenService:Create(Element, Tween, { Size = Size })
 	end
+	-- are you serious ._.
 	if not Tween and Size then
-		TweenService:Create(Element, TInfo, {Position = Position})
+		TweenService:Create(Element, TInfo, { Position = Position })
 	end
 	if not Tween and Position then
-		TweenService:Create(Element, TInfo, {Size = Size})
+		TweenService:Create(Element, TInfo, { Size = Size })
 	end
 	if not Position then
-		TweenService:Create(Element, Tween, {Size = Size})
+		TweenService:Create(Element, Tween, { Size = Size })
 	end
 	if not Size then
-		TweenService:Create(Element, Tween, {Size = Size})
+		TweenService:Create(Element, Tween, { Size = Size })
 	end
 
 	if not Position and Size and Tween then
@@ -306,5 +318,129 @@ Convenience.AddNewTag = function(TagName: string, TaggedObject: any)
 		print("Added new Tag to - " .. TaggedObject)
 	end
 end
+
+-- We can't do GetSecret() for security reasons...
+
+Convenience.NewHTTP = function(URL: string, NewFunction: any, ErrorHandling: any) -- Becareful when using HTTP Service. Anything can happen. Becareful.
+	if not NewFunction then
+		error("THERE WAS NO CUSTOM FUNCTION INPUTTED FOR HTTP", 3)
+	end
+	local function MakeNewHTTP()
+		local response
+		local data
+
+		pcall(function()
+			response = HttpService:GetAsync(URL)
+			data = HttpService:JSONDecode(response)
+		end)
+
+		if not data then
+			return false
+		end
+
+		if data.message == "succes" then
+			NewFunction()
+		end
+		MakeNewHTTP()
+		return MakeNewHTTP()
+	end
+end
+
+Convenience.MakeNewPasteBinPost = function(URL_PASTEBIN_NEW_PASTE: string, dataFields: table) -- BECAREFUL WHEN USING HTTP ANYTHING COULD HAPPEN
+	if not URL_PASTEBIN_NEW_PASTE then
+		error("Your new paste has no string?", 3)
+	end
+	if not dataFields then
+		error("How can we Encode your dataFields if there is nothing in it?", 3)
+	end
+	local data = ""
+
+	for k, v in pairs(dataFields) do
+		data = data .. ("&%s=%s"):format(HttpService:UrlEncode(k), HttpService:UrlEncode(v))
+	end
+	data:sub(2) -- Remove the first "&"
+
+	if ConvenienceSettings.PrintingEnabled == true then
+		print(tostring(data))
+	end
+
+	local response =
+		HttpService:PostAsync(URL_PASTEBIN_NEW_PASTE, data, Enum.HttpContentType.ApplicationUrlEncoded, false)
+	if ConvenienceSettings.PrintingEnabled == true then
+		print(tostring(response))
+	end
+end
+
+if Convenience.NewHTTP() then
+	if ConvenienceSettings.PrintingEnabled == true then
+		print("HTTP Request Success.")
+	else
+		error("HTTP REQUEST FAILED", 3)
+	end
+end
+
+Convenience.MakeNewGUID = function(CurlyBraces: boolean) -- Curly Braces are {} <-- those were curly braces
+	local result = HttpService:GenerateGUID(CurlyBraces)
+	if ConvenienceSettings.PrintingEnabled == true then
+		print(tostring(result))
+	end
+	return result
+end
+
+Convenience.JSONDecode = function(jsonString: string, NewFunction: any)
+	if not jsonString then
+		error("JSON string is nil!", 3)
+	end
+	if not NewFunction then
+		error("You must have a function if (data) is success!")
+	end
+	local data = HttpService:JSONDecode(jsonString)
+
+	if data.message == "success" then
+		NewFunction()
+	end
+end
+
+Convenience.JSONEncode = function(tab: table)
+	local JSON = HttpService:JSONEncode(tab)
+	if ConvenienceSettings.PrintingEnabled == true then
+		print(tostring(JSON))
+	end
+end
+
+Convenience.URLEncode = function(URL: string, NewFunction: any)
+	if not NewFunction then
+		local result = HttpService:UrlEncode(URL)
+		print(result)
+	end
+	local result = HttpService:UrlEncode(URL)
+	NewFunction(result)
+	return result
+end
+-- You should've figured out Headers yourself
+-- The body you should've encoded yourself
+Convenience.NewHTTPRequest = function(URL: string, Method: string, Headers: any, Body: any)
+	local function request()
+		local response = HttpService:RequestAsync({
+			URL,
+			Method,
+			Headers,
+			Body,
+		})
+		if response.Success then
+			print("Status code:", response.StatusCode, response.StatusMessage)
+			print("Response body:\n", response.Body)
+		else
+			print("The request failed:", response.StatusCode, response.StatusMessage)
+		end
+	end
+
+	local success, message = pcall(request) -- wrap in a pcall so it doesn't break that would be bad.
+	if not success then
+		print("Http Request failed:", message)
+	end
+end
+
+
 
 return Convenience
