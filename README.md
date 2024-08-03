@@ -6,7 +6,9 @@
 
 ### By Dynasty
 #### On Roblox
-*August 2nd 2024*
+*August 3rd 2024*
+
+This Module Script is used to make Roblox Scripting More Convenient.
 
 > [!CAUTION]
 > This script is very new and most likely encounter errors.
@@ -19,30 +21,35 @@
 > [!NOTE]
 > If you can, please highlight some things you want more ***Convenient.***
 >
+> I got some template script from the Roblox Docs so some things may seem familiar if you even read the Docs 
+>
 > Written in VS Code! *Thats why everything may seem* **janky**
 
 ---
 
-# The Module
-## Controller Support
+## The Module
 Currently we have
 
-> Controller Rumbling
-> 
-> Controller Stick Rumbling
-> 
-> Lighting Changing
-> 
-> Displaying Player Height
-> 
-> Rewarding The Player
-> 
-> A Custom Function for when the game fully loads
-> 
-> Detect The Player Input
-> 
-> Gamepad Support
-> 
-> Deleting Something
->
-> Error Handling *kinda*
+#### Controller Stick Rumbling
+ 
+#### Lighting Changing
+
+#### Displaying Player Height
+
+#### Rewarding The Player
+
+#### A Custom Function for when the game fully loads
+
+#### Detect The Player Input
+
+#### Gamepad Support
+
+#### Deleting Something
+
+#### Error Handling *kinda*
+
+#### HTTPService *this is not optimized, and probably don't use it. It's not optimized*
+
+#### Controller Rumbling
+
+#### Settings

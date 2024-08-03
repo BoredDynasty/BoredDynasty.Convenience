@@ -1,5 +1,6 @@
 --!strict
 --[[
+
 https://github.com/BoredDynasty/BoredDynasty.Convenience/tree/main
 Please don't copy this
 Dynasty here!
@@ -20,6 +21,7 @@ Over [tonumber(400)] Lines of Code! [Thats alot for me!]
                                                     >THIS IS NOT OPTIMIZED<
 
 Module Script
+Place in ReplicatedStorage
 --]]
 
 -- Variables
@@ -28,8 +30,9 @@ local ConvenienceSettings = {
 	PrintingEnabled = true, -- We'll sometimes ignore this for your own benefit.
 	CustomCode = false,
 }
+
 do
-	return ConvenienceSettings
+	return ConvenienceSettings -- So you can set your own settings in a different script!
 end
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage');
