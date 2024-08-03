@@ -3,10 +3,10 @@
 https://github.com/BoredDynasty/BoredDynasty.Convenience/tree/main
 Please don't copy this
 Dynasty here!
-If you don't create the things required to run this module script, somethings won't work.
+If you don't create the things required to run this module script, somethings won't work. tostring("And some things will not work!")
 Ill comment my script if you have to make something in a certain area of your Roblox Game.
 Used for making everything convenient so you don't have to write too many scripts for your game
-Very small script as of right now
+Over [tonumber(300)] Lines of Code! [Thats alot for me!]
                                                     >THIS IS NOT OPTIMIZED<
 
 Module Script
@@ -14,6 +14,13 @@ Module Script
 
 -- Variables
 local Convenience = {}
+local ConvenienceSettings = {
+	PrintingEnabled = true,
+	CustomCode = false,
+}
+do
+	return ConvenienceSettings
+end
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage');
 local UserInputService = game:GetService('UserInputService');
@@ -54,11 +61,18 @@ local TInfo = TweenInfo.new( -- Default TweenInfo
 
 -- Things
 local OnGameLoaded = ReplicatedStorage:WaitForChild("GameLoaded") -- Make a remote event called "GameLoaded" within ReplicatedStorage
+if not OnGameLoaded then
+	local OGL = Instance.new("RemoteEvent", ReplicatedStorage)
+	OGL.Name = "GameLoaded"
+	if ConvenienceSettings.PrintingEnabled == true then
+		print("We've created a Remote Event in ReplicatedStorage called - " .. OGL.Name)
+	end
+end
 local Connection -- For Disconnecting heartbeats. Don't try this in real life!
 
 -- Module Script Functions
-
 Convenience.OnGameLoaded = function(
+	CustomCode,
 	GUIFrame: Frame,
 	WaitTime: number,
 	TweenInf: TweenInfo,
@@ -67,19 +81,28 @@ Convenience.OnGameLoaded = function(
 ) -- Make the frame fit the entire screen atleast. If you encounter positioning problems, add your own position arguements
 	-- The first position is the frame outside the screen.
 	-- Everything is self explanatory
-	if not TweenInf then
-		TweenService:Create(GUIFrame, TInfo, { Position = FirstPosition })
-	else
-		TweenService:Create(GUIFrame, TweenInf, { Position = FirstPosition })
-	end
-	-- Gee, there sure are a lot of "if" statements!
-	if WaitTime then
-		wait(tonumber(WaitTime))
-		if TweenInf then
-			TweenService:Create(GUIFrame, TweenInf, { Position = FirstPosition })
+	if ConvenienceSettings.CustomCode == false then
+		if not TweenInf then
+			TweenService:Create(GUIFrame, TInfo, { Position = LastPosition })
 		else
-			TweenService:Create(GUIFrame, TInfo, { Position = FirstPosition })
+			TweenService:Create(GUIFrame, TweenInf, { Position = LastPosition })
 		end
+		-- Gee, there sure are a lot of "if" statements!
+		if WaitTime then
+			task.wait(tonumber(WaitTime))
+			if TweenInf then
+				TweenService:Create(GUIFrame, TweenInf, { Position = FirstPosition })
+			else
+				TweenService:Create(GUIFrame, TInfo, { Position = FirstPosition })
+			end
+		end
+	else
+		if not CustomCode then
+			if ConvenienceSettings.PrintingEnabled == true then
+				warn("You must input a function within the parameter if you want custom code!")
+			end
+		end
+		CustomCode()
 	end
 end
 
@@ -119,7 +142,9 @@ Convenience.DisplayPlayerHeight = function(TextLabel: TextLabel)
 		Connection = RunService.Heartbeat:Connect(function() -- Not optimal
 			local rootPart = LocalPlayer.Character:WaitForChild("HumanoidRootPart", 20)
 			if not rootPart then
-				error("The Player has literally no HumanoidRootPart! or you could be running the game...")
+				if ConvenienceSettings.PrintingEnabled == true then
+					print("The Player has no HumanoidRootPart?")
+				end
 			end
 			local Y_Level = rootPart.CFrame.Position.Y
 			TextLabel.Text = "You are" .. tonumber(Y_Level) .. "studs high."
@@ -136,12 +161,18 @@ end
 
 Players.PlayerRemoving:Connect(function()
 	Connection:Disconnect() -- so no memory leak
+	if ConvenienceSettings.PrintingEnabled == true then
+		print("Disconnecting Heartbeat... - " .. LocalPlayer.DisplayName)
+	end
 end)
 
 -- You can reward the player!
 -- Make your own datastore if ya want. Theres other modules scripts that do that better than mines
 Convenience.MakeRewards = function(Modifier: string)
 	local newReward = RewardsModifier[Modifier] * Rewards
+	if ConvenienceSettings.PrintingEnabled == true then
+		print("Made new player reward... - x" .. Modifier)
+	end
 	return newReward
 end
 
@@ -149,10 +180,14 @@ Convenience.ChangeLighting = function(NewClockTime: number, GeographicLocation: 
 	Lighting.ClockTime = NewClockTime
 	Lighting.GeographicLatitude = GeographicLocation
 	if not NewClockTime then
-		error("Did you forget to specify the ClockTime to change?", 1)
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("Did you forget to provide the New Clock Time?")
+		end
 	end
 	if not GeographicLocation then
-		warn("No Geographic Latitude inputted.")
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("Did you forget to provide the new Geographic Latitude?")
+		end
 	end
 end
 
@@ -162,10 +197,20 @@ Convenience.TweenLighting = function(TweenInf: TweenInfo, NewClockTime: number, 
 		TweenService:Create(Lighting, TInfo, { GeographicLocation = NewClockTime })
 	else
 		TweenService:Create(Lighting, TweenInf, { ClockTime = NewClockTime })
-		TweenService:Create(Lighting, TweenInf, { GeographicLocation = NewClockTime })
+		TweenService:Create(Lighting, TweenInf, { GeographicLatitude = GeographicLocation })
+	end
+
+	if not NewClockTime then
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("Did you forget to provide the New Clock Time? [Tween]")
+		end
+	end
+	if not GeographicLocation then
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("Did you forget to provide the new Geographic Latitude? [Tween]")
+		end
 	end
 end
-
 Convenience.DetectPlayerInput = function()
 	local PlayerInput
 	local LastInput = UserInputService:GetLastInputType()
@@ -178,9 +223,10 @@ Convenience.DetectPlayerInput = function()
 		PlayerInput = LastInput
 	end
 	if not PlayerInput then
-		warn("? Theres no player input...")
+		if ConvenienceSettings.PrintingEnabled == true then
+			print("Theres no player User Input. This script uses -- :GetLastInputType()")
+		end
 	end
-
 	return PlayerInput
 end
 
@@ -189,7 +235,76 @@ Convenience.DeleteSomething = function(args) -- Could just do it yourself but, m
 		args:Destroy()
 	end
 	if not args then
-		warn(tostring("You can't delete [nil]."))
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("You can't Destroy() nothing")
+		end
 	end
 end
+
+Convenience.AddElement = function(Element: any, Parent: any, Properties: any) -- Make an Element. Almost anything infact
+	if not Parent then
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("You did not add a Parent to the newly created Element.")
+		end
+		return
+	end
+	if not Element then
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("Theres no new Element to be created.")
+		end
+	end
+	if not Properties then
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("No properties to be inputted.")
+		end
+	end
+	local NewElement = Instance.new(Element, Parent) -- Make sure to parent it to something.
+	NewElement.Properties = Properties -- Make sure it has properties! Like Size, Position etc...
+end
+
+Convenience.AddNewImage = function(ImageID: any, ImagePosition: UDim2)
+	local gui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
+	local NewImage = Instance.new("ImageLabel", gui)
+	gui.Name = "NewImage_Convenience"
+	NewImage.Image = ImageID
+	NewImage.Position = ImagePosition
+end
+
+Convenience.TweenElement = function(Element: GuiObject, Tween: TweenInfo, Position: UDim2, Size: UDim2)
+	if Position and Size and Tween then
+		TweenService:Create(Element, Tween, {Position = Position})
+		TweenService:Create(Element, Tween, {Size = Size})
+	end
+	if not Tween and Size then
+		TweenService:Create(Element, TInfo, {Position = Position})
+	end
+	if not Tween and Position then
+		TweenService:Create(Element, TInfo, {Size = Size})
+	end
+	if not Position then
+		TweenService:Create(Element, Tween, {Size = Size})
+	end
+	if not Size then
+		TweenService:Create(Element, Tween, {Size = Size})
+	end
+
+	if not Position and Size and Tween then
+		if ConvenienceSettings.PrintingEnabled == true then
+			warn("You have to input something to Tween " .. Element.Name)
+		end
+	end
+end
+
+Convenience.AddNewTag = function(TagName: string, TaggedObject: any)
+	if not TagName then
+		if ConvenienceSettings.PrintingEnabled == true then
+			error("Theres no Tag Name inputted!", 2)
+		end
+	end
+	CollectionService:AddTag(TaggedObject, TagName)
+	if ConvenienceSettings.PrintingEnabled == true then
+		print("Added new Tag to - " .. TaggedObject)
+	end
+end
+
 return Convenience
